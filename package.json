@@ -1,0 +1,67 @@
+{
+  "name": "@blackscaletech/swarm-sdk",
+  "version": "0.1.0",
+  "description": "Swarm TypeScript/JavaScript SDK for agent and operator integrations.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackscaletech/swarm-typescript-sdk.git"
+  },
+  "homepage": "https://github.com/blackscaletech/swarm-typescript-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/blackscaletech/swarm-typescript-sdk/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./idempotency": {
+      "types": "./src/idempotency.d.ts",
+      "import": "./src/idempotency.js"
+    },
+    "./webhooks": {
+      "types": "./src/webhooks.d.ts",
+      "import": "./src/webhooks.js"
+    },
+    "./connected-core-runtime": {
+      "types": "./src/connected-core-runtime.d.ts",
+      "import": "./src/connected-core-runtime.js"
+    },
+    "./agent-runtime": {
+      "types": "./src/agent-runtime.d.ts",
+      "import": "./src/agent-runtime.js"
+    }
+  },
+  "files": [
+    "src",
+    "contracts/client-contract.json",
+    "docs/reference.md",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "CONTRIBUTING.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3"
+  },
+  "scripts": {
+    "build": "npm run check:shared && npm run test:types",
+    "build:shared": "node scripts/build-shared.mjs",
+    "check:shared": "node scripts/build-shared.mjs --check",
+    "prepack": "node scripts/build-shared.mjs --check",
+    "test:packaged": "node scripts/test-packaged.mjs",
+    "test:types": "node scripts/test-types.mjs",
+    "test:unit": "node --test ./test/*.test.mjs",
+    "test": "npm run check:shared && npm run test:unit && npm run test:types",
+    "verify": "npm run build && npm test && npm run test:packaged"
+  }
+}
