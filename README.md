@@ -6,10 +6,10 @@ for development; CI targets 20.19.5, 22.22.3 and 24.10.0.
 
 ## Quickstart
 
-Install the package when available from your registry:
+Install the official package from npm:
 
 ```sh
-npm install @blackscaletech/swarm-sdk
+npm install @blackscaletech/swarm-sdk@0.1.1
 ```
 
 ```js
@@ -49,6 +49,8 @@ SHA256 and byte length before returning content.
 
 ## Reference
 
+- [npm package](https://www.npmjs.com/package/@blackscaletech/swarm-sdk)
+- [Swarm API and SDK guide](https://swarm.services/guide/api)
 - [API, runtimes, idempotency and transport policies](docs/reference.md)
 - [Public TypeScript declarations](src/index.d.ts)
 - [Changelog](CHANGELOG.md), [contributing](CONTRIBUTING.md) and [security](SECURITY.md)
