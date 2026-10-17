@@ -33,11 +33,13 @@ digest just to silence a failure. Declaration changes must pass every type test.
 ## Manual Releases
 
 Releases are not triggered by pushes or tags. Package metadata targets
-`blackscaletech/swarm-typescript-sdk`. Before enabling a release, configure an
-npm trusted publisher for `release.yml` and the `npm` GitHub
-environment, and require maintainer approval on that environment. Follow
+`blackscaletech/swarm-typescript-sdk`. The npm trusted publisher is bound to
+`release.yml` and the tag-restricted `npm` GitHub environment. A maintainer must
+review the source and tag before dispatching a release. Follow
 [npm's trusted publishing setup](https://docs.npmjs.com/trusted-publishers/).
-No long-lived npm publish token is needed.
+No long-lived npm publish token is needed. npm requires an existing package
+before trust can be configured; the initial `0.1.0` release used maintainer
+authentication with the exact CI-tested artifact. Subsequent releases use OIDC.
 Release jobs pin Node.js 24.10.0, which bundles npm 11.6.1, above the trusted
 publishing minimum of 11.5.1. The workflow checks that minimum explicitly.
 See the [Node.js release notes](https://nodejs.org/en/blog/release/v24.10.0).
