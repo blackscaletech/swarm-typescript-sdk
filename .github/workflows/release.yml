@@ -34,7 +34,10 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Verify release source attribution
-        run: sh scripts/check-attribution.sh history HEAD
+        run: |
+          sh scripts/check-attribution.sh history HEAD
+          status="$(git status --porcelain=v1 --untracked-files=all)"
+          test -z "$status"
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '24.10.0'
@@ -61,7 +64,10 @@ jobs:
         id: metadata
         env:
           RELEASE_VERSION: ${{ inputs.version }}
-        run: node scripts/release-artifact.mjs create .artifacts
+        run: |
+          status="$(git status --porcelain=v1 --untracked-files=all)"
+          test -z "$status"
+          node scripts/release-artifact.mjs create .artifacts
       - name: Upload only the tested tarball and identity metadata
         id: artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

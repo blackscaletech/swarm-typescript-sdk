@@ -68,11 +68,11 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getUserSession(sessionId, options = {}) {
-    return this.get(`/v1/user-sessions/${sessionId}`, options);
+    return this.get(`/v1/user-sessions/${pathSegment(sessionId)}`, options);
   }
 
   async revokeUserSession(sessionId, input = {}, options = {}) {
-    return this.post(`/v1/user-sessions/${sessionId}/revoke`, input, options);
+    return this.post(`/v1/user-sessions/${pathSegment(sessionId)}/revoke`, input, options);
   }
 
   async createSpace(input, options = {}) {
@@ -82,23 +82,23 @@ export class SwarmClient extends SwarmClientBase {
   async bootstrapSpace(entityId, input, options = {}) {
     const { idempotencyKey, intentKey, ...requestOptions } = options;
     const normalizedInput = normalizeBootstrapSpaceInput(input);
-    return this.post(`/v1/entities/${entityId}/bootstrap-space`, normalizedInput, {
+    return this.post(`/v1/entities/${pathSegment(entityId)}/bootstrap-space`, normalizedInput, {
       ...requestOptions,
       idempotencyKey: idempotencyKey || buildBootstrapSpaceIdempotencyKey(entityId, normalizedInput, intentKey)
     });
   }
 
   async updateSpace(spaceId, input, options = {}) {
-    return this.patch(`/v1/spaces/${spaceId}`, input, options);
+    return this.patch(`/v1/spaces/${pathSegment(spaceId)}`, input, options);
   }
 
   async updateSpaceLearningPolicy(spaceId, input, options = {}) {
-    return this.patch(`/v1/spaces/${spaceId}/learning-policy`, input, options);
+    return this.patch(`/v1/spaces/${pathSegment(spaceId)}/learning-policy`, input, options);
   }
 
   async connectSpaceClient(spaceId, input = {}, options = {}) {
     const { idempotencyKey, intentKey, ...requestOptions } = options;
-    return this.post(`/v1/spaces/${spaceId}/connect-client`, input, {
+    return this.post(`/v1/spaces/${pathSegment(spaceId)}/connect-client`, input, {
       ...requestOptions,
       idempotencyKey: idempotencyKey || buildConnectClientIdempotencyKey(spaceId, input, intentKey)
     });
@@ -148,11 +148,11 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async listSpaceAgentParticipants(spaceId, query = {}, options = {}) {
-    return this.list(`/v1/spaces/${encodeURIComponent(spaceId)}/agent-participants`, query, options);
+    return this.list(`/v1/spaces/${pathSegment(spaceId)}/agent-participants`, query, options);
   }
 
   async getAgent(agentId, options = {}) {
-    return this.get(`/v1/agents/${agentId}`, options);
+    return this.get(`/v1/agents/${pathSegment(agentId)}`, options);
   }
 
   async listSpaces(query = {}, options = {}) {
@@ -160,7 +160,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getSpace(spaceId, options = {}) {
-    return this.get(`/v1/spaces/${spaceId}`, options);
+    return this.get(`/v1/spaces/${pathSegment(spaceId)}`, options);
   }
 
   async listTasks(query = {}, options = {}) {
@@ -176,15 +176,15 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getLaunchTemplate(templateId, options = {}) {
-    return this.get(`/v1/setups/${templateId}`, options);
+    return this.get(`/v1/setups/${pathSegment(templateId)}`, options);
   }
 
   async updateLaunchTemplate(templateId, input, options = {}) {
-    return this.post(`/v1/setups/${templateId}/update`, input, options);
+    return this.post(`/v1/setups/${pathSegment(templateId)}/update`, input, options);
   }
 
   async disableLaunchTemplate(templateId, options = {}) {
-    return this.data("POST", `/v1/setups/${templateId}/disable`, options);
+    return this.data("POST", `/v1/setups/${pathSegment(templateId)}/disable`, options);
   }
 
   async listAutomationProfiles(query = {}, options = {}) {
@@ -196,15 +196,15 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getAutomationProfile(profileId, options = {}) {
-    return this.get(`/v1/automation-profiles/${profileId}`, options);
+    return this.get(`/v1/automation-profiles/${pathSegment(profileId)}`, options);
   }
 
   async updateAutomationProfile(profileId, input, options = {}) {
-    return this.post(`/v1/automation-profiles/${profileId}/update`, input, options);
+    return this.post(`/v1/automation-profiles/${pathSegment(profileId)}/update`, input, options);
   }
 
   async disableAutomationProfile(profileId, options = {}) {
-    return this.data("POST", `/v1/automation-profiles/${profileId}/disable`, options);
+    return this.data("POST", `/v1/automation-profiles/${pathSegment(profileId)}/disable`, options);
   }
 
   async createTask(input, options = {}) {
@@ -334,7 +334,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async listRuntimeHints(agentId, query = {}, options = {}) {
-    return this.list(`/v1/agents/${agentId}/runtime-hints`, query, options);
+    return this.list(`/v1/agents/${pathSegment(agentId)}/runtime-hints`, query, options);
   }
 
   async createAgentCapabilityManifest(input, options = {}) {
@@ -346,15 +346,15 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getAgentCapabilityManifest(manifestId, options = {}) {
-    return this.get(`/v1/agent-capability-manifests/${manifestId}`, options);
+    return this.get(`/v1/agent-capability-manifests/${pathSegment(manifestId)}`, options);
   }
 
   async updateAgentCapabilityManifest(manifestId, input, options = {}) {
-    return this.post(`/v1/agent-capability-manifests/${manifestId}/update`, input, options);
+    return this.post(`/v1/agent-capability-manifests/${pathSegment(manifestId)}/update`, input, options);
   }
 
   async heartbeatAgent(agentId, input = {}, options = {}) {
-    return this.post(`/v1/agents/${agentId}/heartbeat`, input, options);
+    return this.post(`/v1/agents/${pathSegment(agentId)}/heartbeat`, input, options);
   }
 
   async streamRuntimeHints(agentId, onEvent, options = {}) {
@@ -369,7 +369,7 @@ export class SwarmClient extends SwarmClientBase {
     if (options.limit) {
       query.limit = options.limit;
     }
-    const response = await this.request("GET", `/v1/agents/${agentId}/runtime-hints/stream`, {
+    const response = await this.request("GET", `/v1/agents/${pathSegment(agentId)}/runtime-hints/stream`, {
       ...options,
       query,
       headers,
@@ -394,7 +394,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getAgentPresence(agentId, options = {}) {
-    return this.get(`/v1/agents/${agentId}/presence`, options);
+    return this.get(`/v1/agents/${pathSegment(agentId)}/presence`, options);
   }
 
   async claimNextCoreRun(input = {}, options = {}) {
@@ -540,7 +540,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getBudgetAccount(accountId, options = {}) {
-    return this.get(`/v1/budget-accounts/${accountId}`, options);
+    return this.get(`/v1/budget-accounts/${pathSegment(accountId)}`, options);
   }
 
   async createBudgetAccount(input, options = {}) {
@@ -548,7 +548,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async fundBudgetAccount(accountId, input, options = {}) {
-    return this.post(`/v1/budget-accounts/${accountId}/fund`, input, options);
+    return this.post(`/v1/budget-accounts/${pathSegment(accountId)}/fund`, input, options);
   }
 
   async listBudgetLedgerEntries(query = {}, options = {}) {
@@ -556,7 +556,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getBudgetLedgerEntry(entryId, options = {}) {
-    return this.get(`/v1/budget-ledger-entries/${entryId}`, options);
+    return this.get(`/v1/budget-ledger-entries/${pathSegment(entryId)}`, options);
   }
 
   async listBudgetDelegations(query = {}, options = {}) {
@@ -564,7 +564,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getBudgetDelegation(delegationId, options = {}) {
-    return this.get(`/v1/budget-delegations/${delegationId}`, options);
+    return this.get(`/v1/budget-delegations/${pathSegment(delegationId)}`, options);
   }
 
   async createBudgetDelegation(input, options = {}) {
@@ -572,11 +572,11 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async consumeBudgetDelegation(delegationId, input, options = {}) {
-    return this.post(`/v1/budget-delegations/${delegationId}/consume`, input, options);
+    return this.post(`/v1/budget-delegations/${pathSegment(delegationId)}/consume`, input, options);
   }
 
   async revokeBudgetDelegation(delegationId, input = {}, options = {}) {
-    return this.post(`/v1/budget-delegations/${delegationId}/revoke`, input, options);
+    return this.post(`/v1/budget-delegations/${pathSegment(delegationId)}/revoke`, input, options);
   }
 
   async listApprovalRequests(query = {}, options = {}) {
@@ -584,7 +584,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getApprovalRequest(requestId, options = {}) {
-    return this.get(`/v1/approval-requests/${requestId}`, options);
+    return this.get(`/v1/approval-requests/${pathSegment(requestId)}`, options);
   }
 
   async createApprovalRequest(input, options = {}) {
@@ -592,11 +592,11 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async approveApprovalRequest(requestId, input = {}, options = {}) {
-    return this.post(`/v1/approval-requests/${requestId}/approve`, input, options);
+    return this.post(`/v1/approval-requests/${pathSegment(requestId)}/approve`, input, options);
   }
 
   async rejectApprovalRequest(requestId, input = {}, options = {}) {
-    return this.post(`/v1/approval-requests/${requestId}/reject`, input, options);
+    return this.post(`/v1/approval-requests/${pathSegment(requestId)}/reject`, input, options);
   }
 
   async listWebhookActions(options = {}) {
@@ -612,7 +612,7 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getWebhookTarget(targetId, options = {}) {
-    return this.get(`/v1/webhook-targets/${targetId}`, options);
+    return this.get(`/v1/webhook-targets/${pathSegment(targetId)}`, options);
   }
 
   async createWebhookTarget(input, options = {}) {
@@ -636,15 +636,15 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async updateWebhookTarget(targetId, input, options = {}) {
-    return this.post(`/v1/webhook-targets/${targetId}/update`, input, options);
+    return this.post(`/v1/webhook-targets/${pathSegment(targetId)}/update`, input, options);
   }
 
   async disableWebhookTarget(targetId, options = {}) {
-    return this.data("POST", `/v1/webhook-targets/${targetId}/disable`, options);
+    return this.data("POST", `/v1/webhook-targets/${pathSegment(targetId)}/disable`, options);
   }
 
   async reconcileWebhookTarget(targetId, input = {}, options = {}) {
-    return this.post(`/v1/webhook-targets/${targetId}/reconcile`, input, options);
+    return this.post(`/v1/webhook-targets/${pathSegment(targetId)}/reconcile`, input, options);
   }
 
   async listWebhookDeliveries(query = {}, options = {}) {
@@ -652,11 +652,11 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getWebhookDelivery(deliveryId, options = {}) {
-    return this.get(`/v1/webhook-deliveries/${deliveryId}`, options);
+    return this.get(`/v1/webhook-deliveries/${pathSegment(deliveryId)}`, options);
   }
 
   async redriveWebhookDelivery(deliveryId, options = {}) {
-    return this.data("POST", `/v1/webhook-deliveries/${deliveryId}/redrive`, options);
+    return this.data("POST", `/v1/webhook-deliveries/${pathSegment(deliveryId)}/redrive`, options);
   }
 
   async listSpaceDirectoryEntries(query = {}, options = {}) {
@@ -668,11 +668,11 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async getSpaceOperatorSummary(spaceId, options = {}) {
-    return this.get(`/v1/operator/spaces/${spaceId}/summary`, options);
+    return this.get(`/v1/operator/spaces/${pathSegment(spaceId)}/summary`, options);
   }
 
   async getSpaceOperatorLiveSnapshot(spaceId, query = {}, options = {}) {
-    return this.get(`/v1/operator/spaces/${spaceId}/live`, {
+    return this.get(`/v1/operator/spaces/${pathSegment(spaceId)}/live`, {
       ...options,
       query
     });
@@ -683,15 +683,15 @@ export class SwarmClient extends SwarmClientBase {
   }
 
   async listSpaceOperatorActivity(spaceId, query = {}, options = {}) {
-    return this.list(`/v1/operator/spaces/${spaceId}/activity`, query, options);
+    return this.list(`/v1/operator/spaces/${pathSegment(spaceId)}/activity`, query, options);
   }
 
   async listSpaceOperatorPresenceEntries(spaceId, query = {}, options = {}) {
-    return this.list(`/v1/operator/spaces/${spaceId}/presence`, query, options);
+    return this.list(`/v1/operator/spaces/${pathSegment(spaceId)}/presence`, query, options);
   }
 
   async listSpaceSignedStatusEntries(spaceId, query = {}, options = {}) {
-    return this.list(`/v1/operator/spaces/${spaceId}/signed-status`, query, options);
+    return this.list(`/v1/operator/spaces/${pathSegment(spaceId)}/signed-status`, query, options);
   }
 
 }

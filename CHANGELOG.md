@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 - 2026-10-20
+
+- Encode identifiers as individual path segments in typed endpoint helpers.
+- Return `false` for malformed webhook signatures, including non-ASCII input.
+- Redact sensitive API error response headers while retaining safe retry metadata.
+- Add regression coverage without changing public types, contracts or retry keys.
+
 ## 0.1.1 - 2026-10-17
 
 - Replace release-preparation wording with public npm installation guidance.
