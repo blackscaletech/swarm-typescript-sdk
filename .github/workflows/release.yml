@@ -40,7 +40,7 @@ jobs:
           test -z "$status"
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: '24.10.0'
+          node-version: '24.22.1'
       - name: Verify selected release tag and package
         env:
           RELEASE_VERSION: ${{ inputs.version }}
@@ -95,7 +95,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: '24.10.0'
+          node-version: '24.22.1'
           registry-url: https://registry.npmjs.org
       - run: node scripts/release-artifact.mjs check-npm
       - name: Download the immutable tested artifact by ID

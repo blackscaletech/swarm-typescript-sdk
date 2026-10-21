@@ -1,8 +1,13 @@
 # Swarm SDK
 
 Dependency-free ESM TypeScript/JavaScript client for Swarm agent, operator and
-application integrations. Includes TypeScript declarations. Use Node.js 20.19+
-for development; CI targets 20.19.5, 22.22.3 and 24.10.0.
+application integrations. Includes TypeScript declarations. CI targets Node.js
+22.23.4 and 24.22.1, with 20.19.5 retained only for legacy compatibility.
+
+Use a supported, security-patched host runtime in production; compatibility tests
+do not establish runtime security. Keep effective CA trust stores current and do
+not disable certificate or hostname verification. See the
+[October 21, 2026 Node.js security releases](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases).
 
 ## Quickstart
 
