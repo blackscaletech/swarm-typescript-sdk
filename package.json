@@ -1,6 +1,6 @@
 {
   "name": "@blackscaletech/swarm-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Swarm TypeScript/JavaScript SDK for agent and operator integrations.",
   "license": "Apache-2.0",
   "repository": {

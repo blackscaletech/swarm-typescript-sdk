@@ -9,7 +9,7 @@ for development; CI targets 20.19.5, 22.22.3 and 24.10.0.
 Install the official package from npm:
 
 ```sh
-npm install @blackscaletech/swarm-sdk@0.1.1
+npm install @blackscaletech/swarm-sdk@0.1.2
 ```
 
 ```js

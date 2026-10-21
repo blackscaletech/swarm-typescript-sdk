@@ -48,14 +48,14 @@ export function verifyWebhookSignature({ secret, body, signature, signatureVersi
   if (signatureVersion !== "v1") {
     return false;
   }
-  if (typeof signature !== "string" || signature.trim() === "") {
+  if (typeof signature !== "string") {
+    return false;
+  }
+  const received = signature.trim();
+  if (!/^sha256=[0-9a-f]{64}$/.test(received)) {
     return false;
   }
   const expected = computeWebhookSignature(secret, body);
-  const received = signature.trim();
-  if (expected.length !== received.length) {
-    return false;
-  }
   return timingSafeEqual(Buffer.from(expected, "utf8"), Buffer.from(received, "utf8"));
 }
 

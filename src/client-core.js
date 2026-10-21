@@ -277,7 +277,7 @@ export class SwarmClientBase {
         throw new SwarmAPIError(raw ? `${method} ${url.pathname} failed` : `${method} ${url.pathname} failed (${response.status}): ${sanitizeSensitiveText(detail)}`, {
           status: response.status,
           body: sanitizeSensitiveValue(data),
-          headers: headersToObject(response.headers)
+          headers: sanitizeSensitiveValue(headersToObject(response.headers))
         });
       }
 
