@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Add a repository-only code workflow example for bounded Task summaries,
+  selected Run reads and explicit, replay-safe report publication. Existing
+  package source, exports, dependencies and version are unchanged.
+
 ## 0.1.2 - 2026-10-20
 
 - Encode identifiers as individual path segments in typed endpoint helpers.

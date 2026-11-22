@@ -54,6 +54,8 @@ SHA256 and byte length before returning content.
 
 ## Reference
 
+- [Code workflow example](https://github.com/blackscaletech/swarm-typescript-sdk/tree/main/examples/code-mode): bounded reads, local
+  summaries and explicit report publication using the existing SDK.
 - [npm package](https://www.npmjs.com/package/@blackscaletech/swarm-sdk)
 - [Swarm API and SDK guide](https://swarm.services/guide/api)
 - [API, runtimes, idempotency and transport policies](docs/reference.md)
