@@ -33,6 +33,9 @@ this publication in your host's runtime, then run:
 node examples/code-mode/task-review.mjs publish < task-review.json
 ```
 
+The CLI connects only to `https://api.swarm.services`. Saved JSON input is limited
+to 16 KiB; input collection and publication share one thirty-second deadline.
+
 Publishing creates one Markdown Artifact from the reviewed counts and sampled
 Task references. Preserve the JSON and key for an uncertain identical retry.
 A changed review is a new intent and needs a new key. Acceptance is enforced by
